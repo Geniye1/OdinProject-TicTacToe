@@ -18,7 +18,30 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10rem;
     height: 100svh;
+}
+
+.game-info-wrapper {
+    display: flex;
+    flex-direction: column;  
+    align-items: center;  
+    gap: 2rem;
+}
+
+.game-info-wrapper h1 {
+    width: 20rem;
+}
+
+.game-info-wrapper svg {
+    max-width: 2.5rem;
+
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+}
+
+.game-info-wrapper svg:hover {
+    transform: rotate(360deg);
 }
 
 .inner-game-container {
@@ -31,6 +54,7 @@ body {
     width: 200px;
     height: 200px;  
     border-radius: 15px;
+    cursor: pointer;
 }
 
 .game-cell:nth-child(1), .game-cell:nth-child(4) {
