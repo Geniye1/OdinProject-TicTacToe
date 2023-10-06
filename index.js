@@ -5,11 +5,21 @@ function Gameboard() {
         currentBoard[i] = Cell();
     }
 
+    const getIndicies = (marker) => {
+        let indicies = [];
+        currentBoard.forEach((cell, index) => {
+            if (cell.getValue() === marker) {
+                indicies.push(index);
+            }
+        });
+        return indicies;
+    }
+
     const applyMove = (cellNum, currentPlayer) => {
         currentBoard[cellNum - 1].setValue(currentPlayer.marker);
     }
 
-    return { applyMove, currentBoard }
+    return { applyMove, currentBoard, getIndicies }
 }
 
 function Cell() {
@@ -27,6 +37,17 @@ function Cell() {
 }
 
 const Game = (() => {
+    const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ]
+
     const board = Gameboard();
 
     const players = [
@@ -49,8 +70,28 @@ const Game = (() => {
         currentPlayer = ((currentPlayer == players[0]) ? players[1] : players[0]);
     }
 
+    const _checkForWin = () => {
+        // get indices of each marker for current player, 'X' or 'O'
+        let playerMoveIndicies = board.getIndicies(currentPlayer.marker);
+
+        // Iterate through each win condition, checking whether or not the moves the player has made contain all of those indicies.
+        // If one does, then that means the player has won.
+        let hasWon = winningConditions.some((condition) => {
+            return condition.every((value) => {
+                return playerMoveIndicies.indexOf(value) !== -1;
+            });
+        });
+
+        if (!hasWon) {
+            return;
+        }
+
+        console.log("Holy fuck you did it oh my god thats so awesome wow great job (im being sarcastic)");
+    }
+
     const playRound = (cellNum) => {
         board.applyMove(cellNum, currentPlayer);
+        _checkForWin();
         _switchPlayerTurn();
     }
 
