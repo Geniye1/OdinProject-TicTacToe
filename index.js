@@ -1,6 +1,6 @@
 function Gameboard() {
+    // Initialize board
     const currentBoard = [];
-
     for (let i = 0; i < 9; i++) {
         currentBoard[i] = Cell();
     }
@@ -52,6 +52,8 @@ function Cell() {
 }
 
 const Game = (() => {
+    'use strict'
+
     const winningConditions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -72,7 +74,7 @@ const Game = (() => {
         "Great move, I bet your opponent has absolutely soiled themselves by now.",
         "That's your move? You do know you have to play to win right?",
         "WHOA. Absolutely INSANE move. Never would have seen that coming",
-        `You know, I envy you: playing Tic Tac Toe on a ${weekdays[date.getDate()]}. I'm just a computer, I will never know the touch of a human.`,
+        `You know, I envy you: playing Tic Tac Toe on a ${weekdays[date.getDate() - 1]}. I'm just a computer, I will never know the touch of a human.`,
         "Guys I hate to admit this since I'm literally the computer controlling this but this game is boring as fuck.",
         "Another fantastic move, you could be world champion material you know (im being totally sarcastic).",
         "Guys I got places to be can we hurry this up?"
@@ -91,7 +93,6 @@ const Game = (() => {
     ]
 
     const board = Gameboard();
-
     const players = [
         {
             name: 'player1',
@@ -106,10 +107,6 @@ const Game = (() => {
 
     // If this becomes true at all then the game has ended and no more moves should be allowed
     let hasGameEnded = false;
-
-    // const _printInitialMessage = () => {
-    //     console.log("Welcome! You are 'X', type call playRound on Game with your desired x and y position to play!");
-    // }
 
     const _switchPlayerTurn = () => {
         currentPlayer = ((currentPlayer == players[0]) ? players[1] : players[0]);
@@ -166,7 +163,7 @@ const Game = (() => {
 
     initializeGame();
 
-    return { playRound, board, reset }
+    return { playRound, reset }
 })();
 
 const gameCells = document.querySelectorAll(".game-cell");
